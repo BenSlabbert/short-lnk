@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
+import { Session } from 'meteor/session';
 
 import { Links } from '../api/links';
 import LinksListItem from './LinksListItem';
@@ -15,16 +16,18 @@ export default class LinksList extends React.Component {
     }
 
     componentDidMount() {
-        console.log('component did mount links list');
         this.linksTracker = Tracker.autorun(() => {
             Meteor.subscribe('links');
-            const links = Links.find().fetch();
+            
+            const links = Links.find({
+                visible: Session.get('showVisible')
+            }).fetch();
+            
             this.setState({ links });
         });
     }
 
     componentWillUnmount() {
-        console.log('component will unmount links list');
         this.linksTracker.stop();
     }
 
