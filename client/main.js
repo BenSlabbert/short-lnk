@@ -10,17 +10,6 @@ Tracker.autorun(() => {
   onAuthChange(isAuthenticated);
 });
 
-// Stateless functional component
-// good for presentational component
-import React from 'react';
-const MyComponent = (props) => {
-  return (
-    <div>
-      <h1>MyComponent stateless function {props.name}</h1>
-    </div>
-  );
-};
-
 Meteor.startup(() => {
-  ReactDOM.render(<MyComponent name="mike"/>, document.getElementById('app'));
+  ReactDOM.render(routes, document.getElementById('app'));
 });
