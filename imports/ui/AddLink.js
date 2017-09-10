@@ -8,7 +8,8 @@ export default class AddLink extends React.Component {
         super(props);
         this.state = {
             url: '',
-            isOpen: false
+            isOpen: false,
+            error: ''
         }
     }
 
@@ -17,15 +18,16 @@ export default class AddLink extends React.Component {
 
         e.preventDefault();
 
-        if (url) {
-            Meteor.call('links.insert', url, (err, res) => {
-                if (!err) {
-                    this.setState({
-                        url: ''
-                    });
-                }
-            });
-        }
+        Meteor.call('links.insert', url, (err, res) => {
+            if (!err) {
+                this.handleModalClose();
+            } else {
+                this.setState({
+                    error: err.reason
+                });
+            }
+        });
+
     }
 
     onChange(e) {
@@ -34,14 +36,21 @@ export default class AddLink extends React.Component {
         });
     }
 
+    handleModalClose() {
+        this.setState({ isOpen: false, url: '', error: '' });
+    }
+
     render() {
         return (
             <div>
-                <button onClick={() => {this.setState({isOpen: true})}}>+ Add link</button>
+                <button onClick={() => { this.setState({ isOpen: true }) }}>+ Add link</button>
                 <Modal
                     isOpen={this.state.isOpen}
-                    contentLabel="Add link">
-                    <p>Add a link:</p>
+                    contentLabel="Add link"
+                    onAfterOpen={() => { this.refs.url.focus() }}
+                    onRequestClose={this.handleModalClose.bind(this)}>
+                    <h1>Add a link:</h1>
+                    {this.state.error ? <p>{this.state.error}</p> : undefined}
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <input
                             type="text"
@@ -51,7 +60,7 @@ export default class AddLink extends React.Component {
                             onChange={this.onChange.bind(this)} />
                         <button>Add links</button>
                     </form>
-                    <button onClick={() => {this.setState({isOpen: false, url: ''})}}>Cancel</button>
+                    <button onClick={this.handleModalClose.bind(this)}>Cancel</button>
                 </Modal>
             </div>
         );
