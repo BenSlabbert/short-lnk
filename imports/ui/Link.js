@@ -11,7 +11,7 @@ export default () => {
     return (
         <div>
             <PrivateHeader title="Your Links" />
-            <div>
+            <div className="page-content">
                 <LinksListFilters />
                 <AddLink />
                 <LinksList />
