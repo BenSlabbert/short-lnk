@@ -1,12 +1,16 @@
 .header {
-    background-color: $button-bg;
-    color: white;
+    background: $header-bg;
+    color: $head-color;
 }
 
 .header__content {
     display: flex;
     justify-content: space-between;
-    max-width: 50rem;
+    max-width: $site-max-width;
     margin: 0 auto;
-    padding: 1.4rem;
+    padding: $space;
+}
+
+.header__title {
+    margin: 0;
 }
