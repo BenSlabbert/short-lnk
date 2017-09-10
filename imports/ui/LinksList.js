@@ -2,6 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Tracker } from 'meteor/tracker';
 import { Session } from 'meteor/session';
+import FlipMove from 'react-flip-move';
 
 import { Links } from '../api/links';
 import LinksListItem from './LinksListItem';
@@ -18,11 +19,11 @@ export default class LinksList extends React.Component {
     componentDidMount() {
         this.linksTracker = Tracker.autorun(() => {
             Meteor.subscribe('links');
-            
+
             const links = Links.find({
                 visible: Session.get('showVisible')
             }).fetch();
-            
+
             this.setState({ links });
         });
     }
@@ -33,7 +34,7 @@ export default class LinksList extends React.Component {
 
     renderLinksListItems() {
 
-        if (this.state.links.length == 0){
+        if (this.state.links.length == 0) {
             return (
                 <div className="item">
                     <p className="item__status--message">No links found</p>
@@ -50,9 +51,10 @@ export default class LinksList extends React.Component {
     render() {
         return (
             <div>
-                <div>
+                <FlipMove maintainContainerHeight={true}>
                     {this.renderLinksListItems()}
-                </div>
+                </FlipMove>
+
             </div>
         );
     }

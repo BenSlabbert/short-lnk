@@ -41,7 +41,7 @@ export default class LinksListItem extends React.Component {
         }
 
         return (
-            <p className="item__message">{this.props.visitedCount} {visitMessage} {this.props.lastVisitedAt} {visitedMessage}</p>
+            <p className="item__message">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>
         );
     }
 
