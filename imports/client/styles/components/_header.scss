@@ -1,0 +1,12 @@
+.header {
+    background-color: $button-bg;
+    color: white;
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 1.4rem;
+}
